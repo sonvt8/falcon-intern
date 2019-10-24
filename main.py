@@ -23,14 +23,14 @@ class HiResource:
             resp.body = f'Good evening'
 
 
-app = falcon.API()
-app.add_route('/health', HealthResource())
-app.add_route('/hello/{name}', HelloResource())
-app.add_route('/hi', HiResource())
+api = falcon.API()
+api.add_route('/health', HealthResource())
+api.add_route('/hello/{name}', HelloResource())
+api.add_route('/hi', HiResource())
 
 def handle_404(req, resp):
     # urllib.getcode()
     resp.status = falcon.HTTP_CONFLICT #TODO khi loi~ khong fai la 404 thi sao? -->
     resp.body = 'Not found'
 # any other route should be placed before the handle_404 one
-app.add_sink(handle_404, '')
+api.add_sink(handle_404, '')
