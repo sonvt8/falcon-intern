@@ -14,16 +14,11 @@ class Test(testing.TestCase):
     app = api
 
     def test_tc01(self):
-        INPUT_name = '123'
+        INPUT_name = '1!a3'
         r = self.simulate_get(f'/hello/{INPUT_name}')
         assert r.status_code != 200
 
     def test_tc02(self):
-        INPUT_name = 'a!bc'
-        r = self.simulate_get(f'/hello/{INPUT_name}')
-        assert r.status_code != 200
-
-    def test_tc03(self):
         INPUT_name = 'some name'
         r = self.simulate_get(f'/hello/{INPUT_name}')
         assert r.status_code == 200
