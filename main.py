@@ -52,4 +52,10 @@ api.add_route('/hola/{name}', HolaResource())
 
 def hola(req, resp):
     raise falcon.HTTPBadRequest(title='name is required', description='Problem when process request')
-api.add_sink(hola, '')
+
+def handle_404(req, resp):
+    resp.status = falcon.HTTP_404
+    resp.body = 'Not found'
+
+api.add_sink(handle_404, '')
+api.add_sink(hola, '/hola')
