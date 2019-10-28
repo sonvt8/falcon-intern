@@ -52,6 +52,15 @@ class IndexResource:
         resp.status = falcon.HTTP_200
         resp.body = req.params['name']
 
+# test 2d
+class StaticResource(object):
+    def on_get(self, req, resp):
+        csv_file_path = "test.csv"
+        resp.status = falcon.HTTP_200
+        resp.content_type = 'text/csv'
+        with open(csv_file_path, 'r') as f:
+            resp.body = f.read()
+
 # ------- Add route ------
 api = falcon.API()
 api.req_options.auto_parse_form_urlencoded = True
@@ -60,6 +69,7 @@ api.add_route('/hello/{name}', HelloResource())
 api.add_route('/hi', HiResource())
 api.add_route('/hola/{name}', HolaResource())
 api.add_route('/hellopost', IndexResource())
+api.add_route('/readcsv', StaticResource())
 
 # ------- Define method to handle Sink ------
 def hola(req, resp):
