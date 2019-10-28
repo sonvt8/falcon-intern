@@ -19,6 +19,7 @@ def get_name(my_str):
 #  Test 2a
 class HealthResource:
     def on_get(self, req, resp):
+        resp.status = falcon.HTTP_200
         resp.body = (json.dumps({"output": ""}))
 
 class HiResource:

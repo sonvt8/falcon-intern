@@ -36,9 +36,6 @@ class HelloResource:
 # tc1c
 class HolaResource:
     def on_get(self, req, resp, name):
-        # url = req.url
-        # url_parts = url.rsplit("/", 1)
-        # resp.body = url_parts[1]
         if verify(name) is False:
             raise falcon.HTTPBadRequest(title='name must be a valid string',description='Problem when process request')
         else:
