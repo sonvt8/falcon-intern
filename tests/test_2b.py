@@ -1,6 +1,6 @@
 from falcon import testing
 import json
-from main_JSON import api
+from main_2b import api
 
 
 def setUpModule():    pass  # nothing here for now
