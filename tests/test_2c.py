@@ -54,7 +54,7 @@ class Test(testing.TestCase):
         r = self.simulate_post(f'/hello/', body=json.dumps(body))
         assert r.status_code != 200
         e = r.json.get('title'); # e aka exception
-        assert 'all values ​​must be valid' in e
+        assert 'all values cannot be empty' in e
 
 
     def test_tc02(self):
