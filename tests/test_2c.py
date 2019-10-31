@@ -102,11 +102,15 @@ class Test(testing.TestCase):
     def test_tc04(self):
         first_name = 'some first name'
         last_name = 'some last name'
+        body = {
+            'fname': {first_name},
+            'lname': {last_name}
+        }
         d = {
             'message': f'Hello{first_name} {last_name}'
             }
         expected_out = json.dumps(d)
-        r = self.simulate_post(f'/hello/', body=json.dumps({'fname': {first_name},'lname': {last_name}}))
+        r = self.simulate_post(f'/hello/', body=json.dumps(body))
         assert r.status_code == 200
         assert r.text == expected_out
 
