@@ -1,6 +1,6 @@
 from falcon import testing
 import json
-from main_2b import api
+from main_2c import api
 
 
 def setUpModule():    pass  # nothing here for now
@@ -63,7 +63,7 @@ class Test(testing.TestCase):
             'fname': first_name,
             'lname': last_name
         }
-        d = {'message': f'Hello{first_name} {last_name}'}
+        d = {'message': f'Hello {first_name} {last_name}'}
         expected_out = json.dumps(d)
         r = self.simulate_post(f'/hello/', body=json.dumps(body))
         assert r.status_code == 200
