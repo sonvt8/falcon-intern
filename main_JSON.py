@@ -50,7 +50,7 @@ class HolaResource:
 class IndexResource:
     def on_post(self, req, resp):
         resp.status = falcon.HTTP_200
-        resp.body = req.params['name']
+        resp.body = req.params['fname']
 
 # test 2d
 class StaticResource(object):
@@ -79,11 +79,11 @@ def handle_404(req, resp):
     resp.status = falcon.HTTP_404
     resp.body = 'Not found'
 
-def hello(req, resp):
-    url = req.relative_uri
-    resp.body = json.dumps({"output": get_name(url)})
+# def hello(req, resp):
+#     url = req.relative_uri
+#     resp.body = json.dumps({"output": get_name(url)})
 
 # ------- Add sink like a router ------
 api.add_sink(handle_404, '')
 api.add_sink(hola, '/hola')
-api.add_sink(hello, '/hello')
+# api.add_sink(hello, '/hello')

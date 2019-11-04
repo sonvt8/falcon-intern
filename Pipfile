@@ -9,6 +9,9 @@ verify_ssl = true
 gunicorn = "*"
 falcon = "==1.3.0"
 httpie = "*"
+falcon-autocrud = "*"
+psycopg2 = "==2.7.3.1"
+faker = "*"
 
 [requires]
 python_version = "3.6"
