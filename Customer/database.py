@@ -1,7 +1,7 @@
 import sqlalchemy as db
 from sqlalchemy.orm import sessionmaker
 import os.path
-import sys, traceback
+import sys
 
 # Load configuration file
 file_exists = os.path.isfile('config.py')

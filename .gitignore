@@ -7,7 +7,7 @@ db.sqlite3
 media
 
 #configuration paramerter
-config.py
+Customer/config.py
 
 # Backup files #
 *.bak

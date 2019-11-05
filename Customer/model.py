@@ -1,4 +1,4 @@
-from database import Database
+from .database import Database
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from faker import Faker
