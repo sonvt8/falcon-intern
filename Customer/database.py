@@ -4,7 +4,7 @@ import os.path
 import sys
 
 # Load configuration file
-file_exists = os.path.isfile('config.py')
+file_exists = os.path.isfile("config.py")
 if file_exists:
     from config import USER, PASSWD, DB, HOST, PORT
 else:

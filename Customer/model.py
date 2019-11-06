@@ -1,7 +1,8 @@
-from .database import Database
+from Customer.database import Database
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from faker import Faker
+import datetime
 
 # Make a connection to database
 db = Database()
@@ -14,24 +15,19 @@ class Customer(Base):
 
     id = Column(Integer, primary_key=True)  # Auto-increment should be default autoincrement=True
     name = Column(String)
-    birth = Column(Date)
-    address = Column(String(50))
-    phone = Column(String(20))
+    dob = Column(Date)
+    updated_at = Column(DateTime, default=datetime.datetime.utcnow)
 
-    def __init__(self, name, birth, address, phone):
+    def __init__(self, name, dob):
         self.name = name
-        self.birth = birth
-        self.address = address
-        self.phone = phone
+        self.dob = dob
 
 def faker_data():
     faker = Faker('cz_CZ')
-    for i in range(1, 5):
+    for i in range(1, 6):
         name = faker.name()
-        birth = faker.date_time_between(start_date='-30y', end_date='now')
-        address = faker.address()
-        phone = faker.phone_number()
-        new_customer = Customer (name,birth,address,phone)
+        dob= faker.date_time_between(start_date='-30y', end_date='now')
+        new_customer = Customer (name,dob)
         db.session.add(new_customer)
         db.session.commit()
 
