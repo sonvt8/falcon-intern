@@ -16,7 +16,7 @@ class Customer(Base):
     id = Column(Integer, primary_key=True)  # Auto-increment should be default autoincrement=True
     name = Column(String)
     dob = Column(Date)
-    updated_at = Column(DateTime, default=datetime.datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.datetime.now())
 
     def __init__(self, name, dob):
         self.name = name

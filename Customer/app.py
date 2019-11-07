@@ -1,4 +1,3 @@
-import falcon
 from falcon_autocrud.middleware import Middleware
 from .resources import *
 
