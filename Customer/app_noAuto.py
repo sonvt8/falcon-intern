@@ -8,14 +8,43 @@ def convert_timestamp(o):
     if isinstance(o, (datetime.date, datetime.datetime)):
         return o.isoformat()
 
+# get customer info as a dictionary
+def customer_info(o):
+    if not o:
+        return {}
+
+    info = {
+        'id'        : o.id,
+        'name'      : o.name,
+        'dob'       : o.dob,
+        'updated_at': o.updated_at.strftime("%Y-%m-%d %H:%M:%S")
+    }
+    return info
+
 # CREATE
-class AddResource:
-    def on_post(self, req, resp):
-        output = req.media
-        new_customer = Customer (output['name'], output['dob'])
-        db.session.add(new_customer)
-        db.session.commit()
-        resp.body = 'Create new customer successfully'
+# new_customer = Customer ('Vũ Thái Bình','19930713','Sài Gòn','0903025581')
+# db.session.add(new_customer)
+# db.session.commit()
+
+# # CREATE
+# class IndexResource:
+#     def on_post(self, req, resp):
+#         output = req.media
+#         name = output['name']
+#         dob = output['dob']
+#
+#         # if fname == '' or lname == '':
+#         #     raise falcon.HTTPBadRequest(title='all values cannot be empty', description='Problem when process request')
+#         # else:
+#         #     resp.status = falcon.HTTP_200
+#         #     resp.body = json.dumps({
+#         #         'message': f'Hello {fname} {lname} {dob}'
+#         #     })
+#
+#         new_customer = Customer (name, dob)
+#         db.session.add(new_customer)
+#         db.session.commit()
+#         resp.body = 'Create new customer successfully'
 
 # READ
 class ReadResource:
@@ -23,17 +52,29 @@ class ReadResource:
         customers = db.session.query(Customer)
         lst_customer = []
         for customer in customers:
-            customer_info = {
-                'id'        :   customer.id,
-                'name'      :   customer.name,
-                'dob'       :   customer.dob,
-                'updated_at':   customer.updated_at.strftime("%Y-%m-%d %H:%M:%S")
-            }
-            lst_customer.append(customer_info)
+            lst_customer.append(customer_info(customer))
         resp.body = json.dumps(lst_customer, default=convert_timestamp)
 
+    def on_post(self, req, resp):
+        # output = req.media
+        # name = output['name']
+        # dob = output['dob']
+        #
+        # new_customer = Customer(name, dob)
+        # db.session.add(new_customer)
+        # db.session.commit()
+        resp.body = 'Create new customer successfully'
+
+
+class SingleReadResource:
+
+    def on_get(self, req, resp,id):
+        customer = db.session.query(Customer).get(id)
+        resp.body = json.dumps(customer_info(customer), default=convert_timestamp)
 
 # ------- Add route ------
+# api = falcon.API()
 api = application = falcon.API(middleware=[Middleware()])
 api.req_options.auto_parse_form_urlencoded = True
 api.add_route('/customers', ReadResource())
+api.add_route('/customers/{id}', SingleReadResource())
