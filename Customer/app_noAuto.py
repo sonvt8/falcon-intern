@@ -21,31 +21,6 @@ def customer_info(o):
     }
     return info
 
-# CREATE
-# new_customer = Customer ('Vũ Thái Bình','19930713','Sài Gòn','0903025581')
-# db.session.add(new_customer)
-# db.session.commit()
-
-# # CREATE
-# class IndexResource:
-#     def on_post(self, req, resp):
-#         output = req.media
-#         name = output['name']
-#         dob = output['dob']
-#
-#         # if fname == '' or lname == '':
-#         #     raise falcon.HTTPBadRequest(title='all values cannot be empty', description='Problem when process request')
-#         # else:
-#         #     resp.status = falcon.HTTP_200
-#         #     resp.body = json.dumps({
-#         #         'message': f'Hello {fname} {lname} {dob}'
-#         #     })
-#
-#         new_customer = Customer (name, dob)
-#         db.session.add(new_customer)
-#         db.session.commit()
-#         resp.body = 'Create new customer successfully'
-
 # READ
 class CustomerResource:
     def on_get(self, req, resp):
@@ -57,8 +32,14 @@ class CustomerResource:
 
     def on_post(self, req, resp):
         body = req.media
-        name = body['name']
-        dob = body['dob']
+
+        name = body.get('name')
+        if not name:
+            raise falcon.HTTPBadRequest(title='Data param name is required', description='Problem when process request')
+
+        dob = body.get('dob')
+        if not dob:
+            raise falcon.HTTPBadRequest(title='Data param dob is required', description='Problem when process request')
 
         new_customer = Customer(name, dob)
         db.session.add(new_customer)
