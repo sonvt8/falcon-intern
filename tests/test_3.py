@@ -1,6 +1,7 @@
 from falcon import testing
 import json
 from Customer.app_noAuto import api
+from Customer.model import *
 
 
 def setUpModule(): pass  # nothing here for now
@@ -9,9 +10,23 @@ def setUpModule(): pass  # nothing here for now
 def tearDownModule(): pass  # nothing here for now
 
 
+def createFixture():
+    db.engine.execute('DROP TABLE IF EXISTS customers;')
+    db.engine.execute('''
+        CREATE TABLE customers(
+            id           serial PRIMARY KEY,
+            name         varchar (50),
+            dob          date,
+            updated_at    timestamp 
+        );
+    ''')
+    faker_data()
+
 class Test(testing.TestCase):
 
-    def setUp(self): pass  # nothing here for now
+    def setUp(self):
+        # Create text fixtures
+        createFixture()
 
     def tearDown(self): pass  # nothing here for now
 
@@ -36,3 +51,24 @@ class Test(testing.TestCase):
     def test_02(self):
         r = self.simulate_get('/customers/7')
         assert r.json == {}
+
+
+class TestPOST(testing.TestCase):
+
+    def setUp(self): pass  # nothing here for now
+
+    def tearDown(self): pass  # nothing here for now
+
+    app = api
+
+    def test_00(self):
+        new_customer = {
+            "name"	: "Binh Vu",
+            "dob"	: "1993-07-13"
+        }
+        r = self.simulate_post(f'/customers', body=json.dumps(new_customer))
+        assert r
+        assert r.json == {"id": 6}
+
+        print()
+
