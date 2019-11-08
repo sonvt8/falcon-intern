@@ -55,7 +55,8 @@ class Test(testing.TestCase):
 
 class TestPOST(testing.TestCase):
 
-    def setUp(self): pass  # nothing here for now
+    def setUp(self):
+        createFixture()
 
     def tearDown(self): pass  # nothing here for now
 
@@ -68,7 +69,6 @@ class TestPOST(testing.TestCase):
         }
         r = self.simulate_post(f'/customers', body=json.dumps(new_customer))
         assert r
-        assert r.json == {"id": 6}
+        assert r.json == {'id': f'6'}
 
-        print()
 

@@ -47,7 +47,7 @@ def customer_info(o):
 #         resp.body = 'Create new customer successfully'
 
 # READ
-class ReadResource:
+class CustomerResource:
     def on_get(self, req, resp):
         customers = db.session.query(Customer)
         lst_customer = []
@@ -56,14 +56,15 @@ class ReadResource:
         resp.body = json.dumps(lst_customer, default=convert_timestamp)
 
     def on_post(self, req, resp):
-        # output = req.media
-        # name = output['name']
-        # dob = output['dob']
-        #
-        # new_customer = Customer(name, dob)
-        # db.session.add(new_customer)
-        # db.session.commit()
-        resp.body = 'Create new customer successfully'
+        body = req.media
+        name = body['name']
+        dob = body['dob']
+
+        new_customer = Customer(name, dob)
+        db.session.add(new_customer)
+        db.session.flush()
+        db.session.commit()
+        resp.body = json.dumps({'id': f'{new_customer.id}'})
 
 
 class SingleReadResource:
@@ -73,8 +74,8 @@ class SingleReadResource:
         resp.body = json.dumps(customer_info(customer), default=convert_timestamp)
 
 # ------- Add route ------
-# api = falcon.API()
-api = application = falcon.API(middleware=[Middleware()])
+api = falcon.API()
+# api = application = falcon.API(middleware=[Middleware()])
 api.req_options.auto_parse_form_urlencoded = True
-api.add_route('/customers', ReadResource())
+api.add_route('/customers', CustomerResource())
 api.add_route('/customers/{id}', SingleReadResource())
