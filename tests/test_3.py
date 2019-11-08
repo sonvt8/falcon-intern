@@ -37,8 +37,8 @@ def createFixture_get():
             ('Thai Son'    , '1988-05-15', '2019-11-07 23:31:40'),
             ('Thai Binh'   , '1993-07-13', '2019-11-07 23:31:40'),
             ('Minh Anh'    , '1982-01-01', '2019-11-07 23:31:40'),
-            ('Thanh Nguyen', '1985-12-04', '2019-11-07 23:31:40'),
-            ('Duc Nguyen'  , '1997-10-03', '2019-11-07 23:31:40')
+            ('Name04'      , '2011-12-01', '2019-11-07 23:31:40'),
+            ('Name05'      , '2018-05-06', '2019-08-16 08:09:01')
     ''');
 
 class Test(testing.TestCase):
@@ -51,23 +51,23 @@ class Test(testing.TestCase):
 
     app = api
 
-    def test_00(self):
+    def test_03(self):
         r = self.simulate_get('/customers')
         assert r
         assert r.json == [
             {'id': 1, 'name': 'Thai Son'    , 'dob': '1988-05-15', 'updated_at': '2019-11-07 23:31:40'},
             {'id': 2, 'name': 'Thai Binh'   , 'dob': '1993-07-13', 'updated_at': '2019-11-07 23:31:40'},
             {'id': 3, 'name': 'Minh Anh'    , 'dob': '1982-01-01', 'updated_at': '2019-11-07 23:31:40'},
-            {'id': 4, 'name': 'Thanh Nguyen', 'dob': '1985-12-04', 'updated_at': '2019-11-07 23:31:40'},
-            {'id': 5, 'name': 'Duc Nguyen'  , 'dob': '1997-10-03', 'updated_at': '2019-11-07 23:31:40'}
+            {'id': 4, 'name': 'Name04'      , 'dob': '2011-12-01', 'updated_at': '2019-11-07 23:31:40'},
+            {'id': 5, 'name': 'Name05'      , 'dob': '2018-05-06', 'updated_at': '2019-08-16 08:09:01'}
         ]
 
-    def test_01(self):
-        r = self.simulate_get('/customers/4')
+    def test_03a(self):
+        r = self.simulate_get('/customers/5')
         assert r
-        assert r.json == {'id': 4, 'name': 'Thanh Nguyen', 'dob': '1985-12-04', 'updated_at': '2019-11-07 23:31:40'}
+        assert r.json == {'id': 5, 'name': 'Name05'      , 'dob': '2018-05-06', 'updated_at': '2019-08-16 08:09:01'}
 
-    def test_02(self):
+    def test_03b(self):
         r = self.simulate_get('/customers/7')
         assert r.json == {}
 
@@ -107,3 +107,30 @@ class TestPOST(testing.TestCase):
         assert r.status_code != 200
         e = r.json.get('title'); # e aka exception
         assert 'Data param name is required' in e
+
+class TestPUT(testing.TestCase):
+
+    def setUp(self):
+        createFixture_get()
+
+    def tearDown(self): pass  # nothing here for now
+
+    app = api
+
+    def test_04(self):
+        new_customer = {
+            "name"	: "Son"
+        }
+        r = self.simulate_put(f'/customers/3', body=json.dumps(new_customer))
+        assert r
+        # NOTE: Comment datetime.now() in on_put method of app_noAuto.py before doing unittest
+        assert r.json == {'id': 3, 'name': 'Son', 'dob': '1982-01-01', 'updated_at': '2019-11-07 23:31:40'}
+
+    def test_04a(self):
+        new_customer = {
+            "dob": "2011-11-11"
+        }
+        r = self.simulate_put(f'/customers/4', body=json.dumps(new_customer))
+        assert r
+        # NOTE: Comment datetime.now() in on_put method of app_noAuto.py before doing unittest
+        assert r.json == {'id': 4, 'name': 'Name04', 'dob': '2011-11-11', 'updated_at': '2019-11-07 23:31:40'}
