@@ -22,6 +22,7 @@ class Customer(Base):
         self.name = name
         self.dob = dob
 
+
 def faker_data():
     faker = Faker('cz_CZ')
     for i in range(1, 6):
