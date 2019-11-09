@@ -12,6 +12,7 @@ httpie = "*"
 falcon-autocrud = "*"
 psycopg2 = "==2.7.3.1"
 faker = "*"
+sqlalchemy = "*"
 
 [requires]
 python_version = "3.6"
