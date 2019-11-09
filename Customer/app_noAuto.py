@@ -81,6 +81,12 @@ class SingleReadResource:
         else:
             resp.body = f'id = {id} not found'
 
+    def on_delete(self, req, resp, id):
+        customer = db.session.query(Customer).get(id)
+        resp.body = json.dumps(customer_info(customer), default=convert_timestamp)
+        db.session.delete(customer)
+        db.session.commit()
+
 # ------- Add route ------
 api = falcon.API()
 api.req_options.auto_parse_form_urlencoded = True
