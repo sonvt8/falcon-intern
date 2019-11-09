@@ -83,7 +83,7 @@ class SingleReadResource:
 
     def on_delete(self, req, resp, id):
         customer = db.session.query(Customer).get(id)
-        resp.body = json.dumps(customer_info(customer), default=convert_timestamp)
+        resp.body = json.dumps({"id": int(id)})
         db.session.delete(customer)
         db.session.commit()
 

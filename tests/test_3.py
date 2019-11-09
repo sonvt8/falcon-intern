@@ -14,18 +14,6 @@ def createFixture():
     db.engine.execute('''
         CREATE TABLE customers(
             id           serial PRIMARY KEY,
-            name         varchar (50),
-            dob          date,
-            updated_at    timestamp 
-        );
-    ''')
-    faker_data()
-
-def createFixture_get():
-    db.engine.execute('DROP TABLE IF EXISTS customers;')
-    db.engine.execute('''
-        CREATE TABLE customers(
-            id           serial PRIMARY KEY,
             name         varchar (50) NOT NULL,
             dob          date,
             updated_at    timestamp 
@@ -45,7 +33,7 @@ class Test(testing.TestCase):
 
     def setUp(self):
         # Create text fixtures
-        createFixture_get()
+        createFixture()
 
     def tearDown(self): pass  # nothing here for now
 
@@ -108,10 +96,11 @@ class TestPOST(testing.TestCase):
         e = r.json.get('title'); # e aka exception
         assert 'Data param name is required' in e
 
+
 class TestPUT(testing.TestCase):
 
     def setUp(self):
-        createFixture_get()
+        createFixture()
 
     def tearDown(self): pass  # nothing here for now
 
@@ -134,3 +123,19 @@ class TestPUT(testing.TestCase):
         assert r
         # NOTE: Comment datetime.now() in on_put method of app_noAuto.py before doing unittest
         assert r.json == {'id': 4, 'name': 'Name04', 'dob': '2011-11-11', 'updated_at': '2019-11-07 23:31:40'}
+
+
+class TestDELETE(testing.TestCase):
+
+    def setUp(self):
+        createFixture()
+
+    def tearDown(self): pass  # nothing here for now
+
+    app = api
+
+    def test_05(self):
+        r = self.simulate_delete('/customers/2')
+        assert r
+        assert r.json == {'id': 2}
+
