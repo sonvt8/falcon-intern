@@ -1,6 +1,6 @@
 from falcon import testing
 import json
-from Customer.app_noAuto import api
+from Customer.app import api
 from Customer.model import *
 
 

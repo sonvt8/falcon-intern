@@ -1,6 +1,7 @@
-from falcon_autocrud.middleware import Middleware
 from .resources import *
 
-api = application = falcon.API(middleware=[Middleware()])
-api.add_route('/customers', customerCollectionResource(db.engine))
-api.add_route('/customers/{id}', customerResource(db.engine))
+# ------- Add route ------
+api = falcon.API()
+# api.req_options.auto_parse_form_urlencoded = True
+api.add_route('/customers', CustomerResource())
+api.add_route('/customers/{id}', SingleResource())
