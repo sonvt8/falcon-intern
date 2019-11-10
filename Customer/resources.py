@@ -40,7 +40,7 @@ class CustomerResource:
         db.session.add(new_customer)
         db.session.flush()
         db.session.commit()
-        resp.body = json.dumps({'id': f'{new_customer.id}'})
+        resp.body = json.dumps({'id': new_customer.id})
 
     # READ ALL
     def on_get(self, req, resp):
