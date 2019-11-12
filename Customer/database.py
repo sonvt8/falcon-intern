@@ -18,7 +18,6 @@ else:
         print("File config.py not found. Please create one by copying from config.sample.py")
         sys.exit(1)
 
-
 class Database():
     # replace the user, password, hostname and database according to your configuration according to your informationdoc
     url = 'postgresql://{user}:{passwd}@{host}:{port}/{db}'.format(
