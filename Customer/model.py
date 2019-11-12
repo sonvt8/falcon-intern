@@ -37,6 +37,7 @@ if __name__ == '__main__':
     Base.metadata.drop_all(db.engine)
     # Create new table customers
     Base.metadata.create_all(db.engine)
+
     faker_data()
 
 

@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: mdillon/postgis  # postgres image with postgis ready
+    ports:
+      - ${DB_PORT:-7772}:5432
+    container_name: sonvt8_falcon_intern_postgres
+
+    volumes:
+      - v_postgres:/var/lib/postgresql/data
+    restart: always
+
+  api:
+    image: sonvt8/falcon_intern
+    ports:
+      - ${API_PORT:-8882}:8000  # this api will use db from container nn_falcon_start_postgres:5432  having same network
+    container_name: sonvt8_falcon_intern
+    restart: always
+
+volumes:  # NOTE: volume name will have auto-prefix as the containing-folder name  #TODO we need to customize this as same folder will run for multiple gc member on :staging2 host
+  v_postgres:
