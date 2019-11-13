@@ -38,7 +38,7 @@ ENV LANG=C.UTF-8
 COPY . .
 
 # copy .env used for dockerized mode - NOTE this .env is in folder bin/docker/ and to link the api container with the postgres container
-COPY ./bin/docker/config.py .
+COPY ./bin/docker/.env .
 
 # for documentation on port
 EXPOSE 8000

@@ -4,28 +4,28 @@ import sys
 import os
 from dotenv import load_dotenv; load_dotenv()  # auto load .env
 
-file_exists = os.path.isfile("config.py")
+file_exists = os.path.isfile(".env")
 if file_exists:
     from config import USER, PASSWD, DB, HOST, PORT
 else:
-    with open("config.py", "a+") as f:
-        config_string = f'USER    = your user\n' \
-                        f'PASSWD  = your password\n' \
-                        f'HOST    = your IP\n' \
-                        f'PORT    = your port\n' \
-                        f'DB      = your database\n'
+    with open(".env", "a+") as f:
+        config_string = f'export USERNAME=yourUSER\n' \
+                        f'export PASS=yourPASS\n' \
+                        f'export DB=yourHOST\n' \
+                        f'export HOST=yourHOST\n' \
+                        f'export PORT=yourPORT\n'
         f.write(config_string)
-        print("File config.py not found. Please create one by copying from config.sample.py")
+        print("Please fill all configuration parameters in .evn located in your directory to connect database")
         sys.exit(1)
 
 class Database():
     # replace the user, password, hostname and database according to your configuration according to your informationdoc
     url = 'postgresql://{user}:{passwd}@{host}:{port}/{db}'.format(
-        user=USER,
-        passwd=PASSWD,
-        host=HOST,
-        port=PORT,
-        db=DB,
+        user=os.getenv("USERNAME"),
+        passwd=os.getenv("PASS"),
+        host=os.getenv("HOST"),
+        port=os.getenv("PORT"),
+        db=os.getenv("DB")
     )
     engine = db.create_engine(url)
     session = sessionmaker(bind= engine)()
@@ -35,5 +35,5 @@ class Database():
     #         self.connection = self.engine.connect()
     #         print("Hura!!!Successfully connect to database...")
     #     except Exception as e:
-    #         print(f"Ops!!!You have got fail connection")
+    #         print(e)
     #         sys.exit(1)
