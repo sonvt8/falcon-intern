@@ -2,7 +2,6 @@ import falcon
 import json
 from .model import *
 
-
 # helper to convert object including timestamp into JSON
 def convert_timestamp(o):
     if isinstance(o, (datetime.date, datetime.datetime)):
@@ -87,3 +86,4 @@ class SingleResource:
         resp.body = json.dumps({"id": int(id)})
         db.session.delete(customer)
         db.session.commit()
+

@@ -11,9 +11,9 @@ Introduction for running endpoint CUSTOMER
 Run file model.py, let `faker` help you to create some dummy data in your database <br>
 You may get the notification:
 
->File config.py not found. Please create one by copying from config.sample.py
+>Connection fail. Please, modify parameters in .env to connect database
 
-Don't worry, just find config.py that is automatically created in your directory and fill all parameters included in this for your connection to database.
+Don't worry, just find sample_env.py that is automatically created in your directory and fill all parameters included in this for your connection to database.
 
 Let run `gunicorn` to start your WSGI server by typing the command `gunicorn Customer.app:api --reload` in Pycharm's terminal (NOTE:I am using port 8000 to work with my endpoint)
 ## Contributing
