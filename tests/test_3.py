@@ -2,6 +2,7 @@ from falcon import testing
 import json
 from Customer.app import api
 from Customer.model import *
+import pytest
 
 
 def setUpModule(): pass  # nothing here for now
@@ -13,10 +14,10 @@ def createFixture():
     db.engine.execute('DROP TABLE IF EXISTS customers;')
     db.engine.execute('''
         CREATE TABLE customers(
-            id           serial PRIMARY KEY,
-            name         varchar (50) NOT NULL,
-            dob          date,
-            updated_at    timestamp 
+            	id int PRIMARY KEY ,
+	            name varchar(100) not null,
+	            dob date not null,
+	            updated_at timestamp
         );
     ''')
     db.engine.execute('''
@@ -28,6 +29,7 @@ def createFixture():
             ('Name04'      , '2011-12-01', '2019-11-07 23:31:40'),
             ('Name05'      , '2018-05-06', '2019-08-16 08:09:01')
     ''');
+
 
 class Test(testing.TestCase):
 
