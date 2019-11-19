@@ -18,5 +18,5 @@ class Database():
         session = sessionmaker(bind= engine)()
         print("Hura!!!Successfully connect to database...")
     except Exception:
-        print("Connection fail. Please, modify parameters in .env to connect database")
+        print("Connection fail. Please, run sample_env.py firstly, then modify parameters in .env to connect database")
         sys.exit(1)
