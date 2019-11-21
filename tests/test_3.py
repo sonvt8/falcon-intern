@@ -14,7 +14,7 @@ def createFixture():
     db.engine.execute('DROP TABLE IF EXISTS customers;')
     db.engine.execute('''
         CREATE TABLE customers(
-            	id int PRIMARY KEY ,
+            	id serial PRIMARY KEY ,
 	            name varchar(100) not null,
 	            dob date not null,
 	            updated_at timestamp
@@ -55,7 +55,7 @@ class Test(testing.TestCase):
     def test_03a(self):
         r = self.simulate_get('/customers/5')
         assert r
-        assert r.json == {'id': 5, 'name': 'Name05'      , 'dob': '2018-05-06', 'updated_at': '2019-08-16 08:09:01'}
+        assert r.json == {'id': 5, 'name': 'Name05' , 'dob': '2018-05-06', 'updated_at': '2019-08-16 08:09:01'}
 
     def test_03b(self):
         r = self.simulate_get('/customers/7')
